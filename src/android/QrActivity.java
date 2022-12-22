@@ -247,7 +247,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
                         {
                             Result result = reader.decode(bBitmap);
                             Toast.makeText(this, "The content of the QR image is: " + result.getText(), Toast.LENGTH_SHORT).show();
-                             if(decoded!=null)
+                             if(result!=null)
                                 setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", result));
                             else
                                 setResult(Activity.RESULT_CANCELED);
