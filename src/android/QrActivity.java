@@ -193,76 +193,38 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
         if(resCode == Activity.RESULT_OK && data != null){
-            // String realPath;
-            // // SDK < API11
-            // if (Build.VERSION.SDK_INT < 11) {
-            //     realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(this, data.getData());
-            // }
+            String realPath;
+            // SDK < API11
+            if (Build.VERSION.SDK_INT < 11) {
+                realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(this, data.getData());
+            }
 
-            // // SDK >= 11 && SDK < 19
-            // else if (Build.VERSION.SDK_INT < 19) {
-            //     realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
-            // }
+            // SDK >= 11 && SDK < 19
+            else if (Build.VERSION.SDK_INT < 19) {
+                realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
+            }
 
-            // // SDK > 19 (Android 4.4)
-            // else {
-            //     realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
-            // }
+            // SDK > 19 (Android 4.4)
+            else {
+                realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
+            }
 
-            // InputStream is = null;
-            // try {
-            //     is = new BufferedInputStream(new FileInputStream(realPath));
-            // } catch (FileNotFoundException e) {
-            //     e.printStackTrace();
-            // }
-            // Bitmap bitmap = BitmapFactory.decodeStream(is);
-            // String decoded=scanQRImage(bitmap);
+            InputStream is = null;
+            try {
+                is = new BufferedInputStream(new FileInputStream(realPath));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Bitmap bitmap = BitmapFactory.decodeStream(is);
+            String decoded=scanQRImage(bitmap);
 
-             switch (resCode) {
-            //the case is because you might be handling multiple request codes here
-                case 111:
-                    if(data == null || data.getData()==null) {
-                        Log.e("TAG", "The uri is null, probably the user cancelled the image selection process using the back button.");
-                        return;
-                    }
-                    Uri uri = data.getData();
-                    try
-                    {
-                        InputStream inputStream = getContentResolver().openInputStream(uri);
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        if (bitmap == null)
-                        {
-                            Log.e("TAG", "uri is not a bitmap," + uri.toString());
-                            return;
-                        }
-                        int width = bitmap.getWidth(), height = bitmap.getHeight();
-                        int[] pixels = new int[width * height];
-                        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
-                        bitmap.recycle();
-                        bitmap = null;
-                        RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
-                        BinaryBitmap bBitmap = new BinaryBitmap(new HybridBinarizer(source));
-                        MultiFormatReader reader = new MultiFormatReader();
-                  
-                        Result result = reader.decode(bBitmap);
-                        Toast.makeText(this, "The content of the QR image is: " + result.getText(), Toast.LENGTH_SHORT).show();
-                            if(result!=null)
-                            setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", result));
-                        else
-                            setResult(Activity.RESULT_CANCELED);
-                       
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        Log.e("TAG", "can not open file" + uri.toString(), e);
-                    }
-                break;
+         
         }
 
-            // if(decoded!=null)
-            //     setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
-            // else
-            //     setResult(Activity.RESULT_CANCELED);
+            if(decoded!=null)
+                setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
+            else
+                setResult(Activity.RESULT_CANCELED);
             finish();
         }
     }
