@@ -1,0 +1,21 @@
+{
+  "name": "com.qrscan.plugin",
+  "version": "0.0.1",
+  "description": "",
+  "cordova": {
+    "id": "com.qrscan.plugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pulatov-farhod/QrScann.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Mansur Rizoev",
+  "license": "ISC"
+}
