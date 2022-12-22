@@ -243,19 +243,14 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
                         RGBLuminanceSource source = new RGBLuminanceSource(width, height, pixels);
                         BinaryBitmap bBitmap = new BinaryBitmap(new HybridBinarizer(source));
                         MultiFormatReader reader = new MultiFormatReader();
-                        try
-                        {
-                            Result result = reader.decode(bBitmap);
-                            Toast.makeText(this, "The content of the QR image is: " + result.getText(), Toast.LENGTH_SHORT).show();
-                             if(result!=null)
-                                setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", result));
-                            else
-                                setResult(Activity.RESULT_CANCELED);
-                        }
-                        catch (NotFoundException e)
-                        {
-                            Log.e("TAG", "decode exception", e);
-                        }
+                  
+                        Result result = reader.decode(bBitmap);
+                        Toast.makeText(this, "The content of the QR image is: " + result.getText(), Toast.LENGTH_SHORT).show();
+                            if(result!=null)
+                            setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", result));
+                        else
+                            setResult(Activity.RESULT_CANCELED);
+                       
                     }
                     catch (FileNotFoundException e)
                     {
