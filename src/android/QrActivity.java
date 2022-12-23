@@ -154,12 +154,12 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
     public void openInGallery() {
 
-        // Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        // intent.setType("image/*");
-        // startActivityForResult(intent, 0);
-        Intent pickIntent = new Intent(Intent.ACTION_PICK);
-        pickIntent.setType("image/*");
-        startActivityForResult(pickIntent,0);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 0);
+        // Intent pickIntent = new Intent(Intent.ACTION_PICK);
+        // pickIntent.setType("image/*");
+        // startActivityForResult(pickIntent,0);
     }
 
     private boolean askPermissionAndBrowseFile()  {
