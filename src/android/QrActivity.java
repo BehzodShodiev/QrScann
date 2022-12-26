@@ -191,19 +191,19 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         if(resCode == Activity.RESULT_OK && data != null){
             String realPath;
             // SDK < API11
-            if (Build.VERSION.SDK_INT < 11) {
-                realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(this, data.getData());
-            }
+            // if (Build.VERSION.SDK_INT < 11) {
+            //     realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(this, data.getData());
+            // }
 
-            // SDK >= 11 && SDK < 19
-            else if (Build.VERSION.SDK_INT < 19) {
-                realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
-            }
+            // // SDK >= 11 && SDK < 19
+            // else if (Build.VERSION.SDK_INT < 19) {
+            //     realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
+            // }
 
-            // SDK > 19 (Android 4.4)
-            else {
-                realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
-            }
+            // // SDK > 19 (Android 4.4)
+            // else {
+            //     realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
+            // }
 
             // InputStream is = null;
             // try {
