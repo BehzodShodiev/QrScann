@@ -215,7 +215,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             // String decoded=scanQRImage(bitmap);
             try { 
                 // final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(new FileInputStream(realPath));
+                String str = new FileInputStream(realPath);
+                final InputStream imageStream = getContentResolver().openInputStream(str);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 String decoded = scanQRImage(selectedImage);
                 if(decoded != null){
