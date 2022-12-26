@@ -145,7 +145,6 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         try {
             Result result = reader.decode(bitmap);
             contents = result.getText();
-            setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", contents));
         }
         catch (Exception e) {
             Log.e("QR_READER", "Error decoding barcode", e);
