@@ -213,7 +213,11 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             }
             Bitmap bitmap = BitmapFactory.decodeStream(is);
             String decoded=scanQRImage(bitmap);
-
+            if(decoded != null){
+                setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded.getText()));
+            }else{
+                setResult(Activity.RESULT_CANCELED);
+            }
        
             finish();
         }
