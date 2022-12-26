@@ -219,7 +219,6 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                img.setImageBitmap(selectedImage);
                 String decoded = scanQRImage(selectedImage);
                 // Toast.makeText(MainActivity.this, "Something went wrong:: "+content, Toast.LENGTH_LONG).show();
             // } catch (FileNotFoundException e) {
