@@ -206,14 +206,28 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
                 realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
             }
 
-            InputStream is = null;
-            try {
-                is = new BufferedInputStream(new FileInputStream(realPath));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
-            String decoded=scanQRImage(bitmap);
+            // InputStream is = null;
+            // try {
+            //     is = new BufferedInputStream(new FileInputStream(realPath));
+            // } catch (FileNotFoundException e) {
+            //     e.printStackTrace();
+            // }
+            // Bitmap bitmap = BitmapFactory.decodeStream(is);
+            // String decoded=scanQRImage(bitmap);
+            
+            // try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                img.setImageBitmap(selectedImage);
+                String decoded = scanQRImage(selectedImage);
+                // Toast.makeText(MainActivity.this, "Something went wrong:: "+content, Toast.LENGTH_LONG).show();
+            // } catch (FileNotFoundException e) {
+            //     e.printStackTrace();
+            //     Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            // }
+        
+           
             if(decoded != null){
                 setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
             }else{
