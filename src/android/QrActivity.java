@@ -154,12 +154,9 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
     public void openInGallery() {
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 0);
-        // Intent pickIntent = new Intent(Intent.ACTION_PICK);
-        // pickIntent.setType("image/*");
-        // startActivityForResult(pickIntent,0);
     }
 
     private boolean askPermissionAndBrowseFile()  {
@@ -216,10 +213,8 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             }
             Bitmap bitmap = BitmapFactory.decodeStream(is);
             String decoded=scanQRImage(bitmap);
-            if(decoded!=null)
-                setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
-            else
-                setResult(Activity.RESULT_CANCELED);
+
+       
             finish();
         }
     }
