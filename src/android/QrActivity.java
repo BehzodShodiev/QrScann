@@ -228,7 +228,6 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
                 // Toast.makeText(MainActivity.this, "Something went wrong:: "+content, Toast.LENGTH_LONG).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
             
            
