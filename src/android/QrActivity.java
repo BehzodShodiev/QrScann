@@ -213,18 +213,18 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             // }
             // Bitmap bitmap = BitmapFactory.decodeStream(is);
             // String decoded=scanQRImage(bitmap);
-            
-            // try {
+            final InputStream imageStream = null;
+            try {
                 final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                String decoded = scanQRImage(selectedImage);
+                imageStream = getContentResolver().openInputStream(imageUri);
+               
                 // Toast.makeText(MainActivity.this, "Something went wrong:: "+content, Toast.LENGTH_LONG).show();
-            // } catch (FileNotFoundException e) {
-            //     e.printStackTrace();
-            //     Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
-            // }
-        
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            String decoded = scanQRImage(selectedImage);
            
             if(decoded != null){
                 setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
