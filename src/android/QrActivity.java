@@ -257,13 +257,20 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
         
                     canvas.drawBitmap(originalImage, transformation, paint);
                     content = scanQRImage(background);
+                    if(content != null){
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                    }else{
+                        setResult(Activity.RESULT_CANCELED);
+                    }
+                }else{
+                    if(content != null){
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
+                    }else{
+                        setResult(Activity.RESULT_CANCELED);
+                    }
                 }
         
-                if(content != null){
-                    setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
-                }else{
-                    setResult(Activity.RESULT_CANCELED);
-                }
+               
            
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
