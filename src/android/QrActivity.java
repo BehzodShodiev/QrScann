@@ -43,6 +43,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 
 public class QrActivity extends Activity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
@@ -188,11 +191,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            
-        }else {
-            Toast.makeText(MainActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
-        }
+     
         if(resCode == Activity.RESULT_OK && data != null){
            
             try { 
