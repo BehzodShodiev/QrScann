@@ -188,43 +188,84 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
 
     @Override
     protected void onActivityResult(int reqCode, int resCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            
+        }else {
+            Toast.makeText(MainActivity.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
         if(resCode == Activity.RESULT_OK && data != null){
-            String realPath;
-            // SDK < API11
-            // if (Build.VERSION.SDK_INT < 11) {
-            //     realPath = RealPathUtil.getRealPathFromURI_BelowAPI11(this, data.getData());
-            // }
-
-            // // SDK >= 11 && SDK < 19
-            // else if (Build.VERSION.SDK_INT < 19) {
-            //     realPath = RealPathUtil.getRealPathFromURI_API11to18(this, data.getData());
-            // }
-
-            // // SDK > 19 (Android 4.4)
-            // else {
-            //     realPath = RealPathUtil.getRealPathFromURI_API19(this, data.getData());
-            // }
-
-            // InputStream is = null;
-            // try {
-            //     is = new BufferedInputStream(new FileInputStream(realPath));
-            // } catch (FileNotFoundException e) {
-            //     e.printStackTrace();
-            // }
-            // Bitmap bitmap = BitmapFactory.decodeStream(is);
-            // String decoded=scanQRImage(bitmap);
+           
             try { 
+                Bitmap originalImage  = null;
+                Bitmap background = null;
+                String content;
+                float originalWidth;
+                float originalHeight;
+                Canvas canvas;
+                float scale;
+                float xTranslation;
+                float yTranslation;
+                Matrix transformation;
+                Paint paint;
                 final Uri imageUri = data.getData();
+        
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+        
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                String decoded = scanQRImage(selectedImage);
-                if(decoded != null){
-                    setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", decoded));
+        
+                originalImage = selectedImage;
+        
+                background = Bitmap.createBitmap(1500,1500, Bitmap.Config.ARGB_8888);
+        
+                originalWidth = originalImage.getWidth();
+                originalHeight = originalImage.getHeight();
+        
+                canvas = new Canvas(background);
+        
+                scale = 1500 / originalWidth;
+        
+                xTranslation = 0.0f;
+                yTranslation = (1500 - originalHeight * scale) / 2.0f;
+        
+                transformation = new Matrix();
+                transformation.postTranslate(xTranslation, yTranslation);
+                transformation.preScale(scale, scale);
+        
+                paint = new Paint();
+                paint.setFilterBitmap(true);
+        
+                canvas.drawBitmap(originalImage, transformation, paint);
+                content = scanQRImage(background);
+                if(content == null){
+                    background = Bitmap.createBitmap(900,900, Bitmap.Config.ARGB_8888);
+        
+                    originalWidth = originalImage.getWidth();
+                    originalHeight = originalImage.getHeight();
+        
+                    canvas = new Canvas(background);
+        
+                    scale = 900 / originalWidth;
+        
+                    xTranslation = 0.0f;
+                    yTranslation = (900 - originalHeight * scale) / 2.0f;
+        
+                    transformation = new Matrix();
+                    transformation.postTranslate(xTranslation, yTranslation);
+                    transformation.preScale(scale, scale);
+        
+                    paint = new Paint();
+                    paint.setFilterBitmap(true);
+        
+                    canvas.drawBitmap(originalImage, transformation, paint);
+                    content = scanQRImage(background);
+                }
+        
+                if(content != null){
+                    setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
                 }else{
                     setResult(Activity.RESULT_CANCELED);
                 }
            
-                // Toast.makeText(MainActivity.this, "Something went wrong:: "+content, Toast.LENGTH_LONG).show();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
