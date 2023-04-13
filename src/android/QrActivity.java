@@ -150,7 +150,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
             contents = result.getText();
         }
         catch (Exception e) {
-            Log.e("QR_READER", "Error decoding barcode", e);
+            Log.e("QR_READER", "error img", e);
         }
         return contents;
     }
@@ -260,7 +260,7 @@ public class QrActivity extends Activity implements ZXingScannerView.ResultHandl
                     if(content != null){
                         setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
                     }else{
-                        setResult(Activity.RESULT_CANCELED);
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("QrResult", content));
                     }
                 }else{
                     if(content != null){
